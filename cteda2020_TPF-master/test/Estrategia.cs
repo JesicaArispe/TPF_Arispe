@@ -12,21 +12,16 @@ namespace DeepSpace
 
 		public String Consulta1( ArbolGeneral<Planeta> arbol)
 		{
-			//instancio la clase cola
 			Cola<ArbolGeneral<Planeta>> c = new Cola<ArbolGeneral<Planeta>>();
 
-			//genero un objeto auxiliar para guardar lo que se desencola de cola
 			ArbolGeneral<Planeta> arbolaux;
 
-
-			//encolo el arbol
 			c.encolar(arbol);
-			//encolo el stop de niveles
+
 			c.encolar(null);
 
 			int distancia=0;
 
-			//mientras la cola no esta vacia 
 			while (!c.esVacia())
 			{
 				
@@ -45,8 +40,7 @@ namespace DeepSpace
 						{	
 								c.encolar(hijo); 
 
-						}
-			
+						}			
 					}
 			    }
 				else
@@ -61,15 +55,13 @@ namespace DeepSpace
 
 		public String Consulta2( ArbolGeneral<Planeta> arbol)
 		{
-			//instancio la clase cola
+
 			Cola<ArbolGeneral<Planeta>> c = new Cola<ArbolGeneral<Planeta>>();
 
-			//genero un objeto auxiliar para guardar lo que se desencola de cola
 			ArbolGeneral<Planeta> arbolaux;
 
-			//encolo el arbol
 			c.encolar(arbol);
-			//encolo el stop de niveles
+
 			c.encolar(null);
 
 			int contarPlanetas = 0;
@@ -92,9 +84,7 @@ namespace DeepSpace
 					}
 					foreach( var hijo in arbolaux.getHijos())
 					{
-						
 						c.encolar(hijo);
-						
 					}
 				}				
 				else
@@ -114,27 +104,19 @@ namespace DeepSpace
 
 		public String Consulta3( ArbolGeneral<Planeta> arbol)
 		{
-			//instancio la clase cola
 			Cola<ArbolGeneral<Planeta>> c = new Cola<ArbolGeneral<Planeta>>();
 
-			//genero un objeto auxiliar para guardar lo que se desencola de cola
 			ArbolGeneral<Planeta> arbolaux;
 
-			//encolo el arbol
 			c.encolar(arbol);
-			//encolo el stop de niveles
+
 			c.encolar(null);
 
 			int contarPlanetas = 0;
-
 			int nivel = 0;
-
 			int sumarPoblacion = 0;
-
 			float promedioPorNivel=0;
-
 			string consultaPromedioDePlanetas = "";
-
 			string consulta3 = "CONSULTA 3:" + "\n";
 
 			while (!c.esVacia())
@@ -151,14 +133,11 @@ namespace DeepSpace
 					}
 					foreach (var hijo in arbolaux.getHijos())
 					{
-
 						c.encolar(hijo);
-
 					}
 				}
 				else
-				{
-				
+				{				
 					consultaPromedioDePlanetas += "El promedio poblacional en el nivel " + nivel + " es: " + promedioPorNivel + "\n";
 					contarPlanetas = 0;
 					nivel++;
@@ -179,9 +158,8 @@ namespace DeepSpace
 			List<Planeta> caminoHaciaRaiz = null;
 			List<Planeta> caminoHaciaHumano = null;
 
-			caminoHaciaRaiz = CaminoaRaiz(arbol, new List<Planeta>());
+			caminoHaciaRaiz = CaminoIAaRaiz(arbol, new List<Planeta>());
 			caminoHaciaRaiz.Reverse();
-			//dar vuelta la lista TODO
 
 			caminoHaciaHumano = CaminoRaizAHumano(arbol, new List<Planeta>());
 
@@ -208,34 +186,28 @@ namespace DeepSpace
 			return null;
 		}
 
-		public List<Planeta> CaminoaRaiz(ArbolGeneral<Planeta> arbol, List<Planeta> caminoDeLaIA)
+		public List<Planeta> CaminoIAaRaiz(ArbolGeneral<Planeta> arbol, List<Planeta> caminoDeLaIA)
 		{
 			
-			//preorden 1ro raiz
 			caminoDeLaIA.Add(arbol.getDatoRaiz());
 
-			//si encontre camino
 			if (arbol.getDatoRaiz().EsPlanetaDeLaIA())
 			{
 				return caminoDeLaIA;
 			}
 			else
 			{
-				//if(arbol.esHoja())
-				//{
 					foreach(var hijo in arbol.getHijos())
 					{
 					
-						List<Planeta> caminoAux =CaminoaRaiz(hijo, caminoDeLaIA);
+						List<Planeta> caminoAux = CaminoIAaRaiz(hijo, caminoDeLaIA);
 						if (caminoAux != null)
 						{
 							return caminoAux;
 						}
 					
 					}
-					//saco ultimo planeta
 					caminoDeLaIA.RemoveAt(caminoDeLaIA.Count()-1);
-				//}
 			}
 			return null;
 		}
@@ -243,10 +215,8 @@ namespace DeepSpace
 		public List<Planeta> CaminoRaizAHumano(ArbolGeneral<Planeta> arbol, List<Planeta> caminoDeRaizAHumano)
 		{
 
-			//preorden 1ro raiz
 			caminoDeRaizAHumano.Add(arbol.getDatoRaiz());
 
-			//si encontre camino
 			if (arbol.getDatoRaiz().EsPlanetaDelJugador())
 			{
 				return caminoDeRaizAHumano;
@@ -264,9 +234,9 @@ namespace DeepSpace
 					}
 
 				}
-				//saco ultimo planeta
+
 				caminoDeRaizAHumano.RemoveAt(caminoDeRaizAHumano.Count() - 1);
-				//}
+
 			}
 			return null;
 		}
